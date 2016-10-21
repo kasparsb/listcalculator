@@ -11,7 +11,14 @@ $version = $pkg->version;
     <link rel="stylesheet" href="build/app.min-<?php echo $version ?>.css" type='text/css' media='all' />
 </head>
 <body>
-    <h1>Hello app</h1>
+    <div class="app">
+        <div class="calculator">
+            <div class="calculator__input">
+                <textarea class="calculator__textarea"></textarea>
+            </div>
+            <div class="calculator__results"></div>
+        </div>
+    </div>
     <script src="build/app.min-<?php echo $version ?>.js"></script>
 </body>
 </html>
