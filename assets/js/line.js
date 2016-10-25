@@ -16,7 +16,7 @@ Line.prototype = {
 
         for (var i = 0; i < words.length; i++) {
 
-            number = this.parseNumber(words[i]);
+            number = this.extractNumberFromWord(words[i]);
 
             if (number) {
                 r.push(number);
@@ -26,31 +26,65 @@ Line.prototype = {
         return r;
     },
 
-    parseNumber: function(text) {
-        text = text.trim();
+    /**
+     * Extract number from word by this pattern
+     *     numbers .|, numbers whitespace | end | anything but number
+     */
+    extractNumberFromWord: function(text) {
+        var methods = ['extractClean', 'extractPostfixed', 'extractPrefixed']
+        var n = false;
 
-        // Meklējam skaitlisko vērtību
+        // Meklējam pirmo metodi, kura spēj atrast kombināciju
+        for (var i = 0; i < methods.length; i++) {
+            n = this[methods[i]](text);
+            if (n) {
+                break;
+            }
+        }
 
+        return n;
+    },
 
-        number = parseFloat(text);
+    extractClean: function(word) {
+        var re = /^([0-9]+[\.\,]?[0-9]*)$/;
+        var m = word.match(re);
 
-        if (!isNaN(number)) {
+        if (m != null && m.length > 1) {
             return {
-                group: '',
-                number: number
+                group: '__clean__',
+                number: parseFloat(m[1].replace(',', '.'))
             }
         }
 
         return false;
     },
 
-    /**
-     * Extract number from word by this pattern
-     *     numbers .|, numbers whitespace | end | anything but number
-     */
-    extractNumberFromWord: function(text) {
-        var re = /(^|([^0-9])*)([0-9]*)([.|,]*)([0-9]*)($|([^0-9])*$)/;
-        text.mach()
+    extractPostfixed: function(word) {
+        var re = /^([^0-9]+)([0-9]+[\.\,]?[0-9]*)$/;
+        var m = word.match(re);
+
+        if (m != null && m.length > 2) {
+            return {
+                group: m[1],
+                number: parseFloat(m[2].replace(',', '.'))
+            }
+        }
+
+        return false;
+    },
+
+    extractPrefixed: function(word) {
+        var re = /^([0-9]+[\.\,]?[0-9]*)([^0-9]+)$/;
+        var m = word.match(re);
+
+        if (m != null && m.length > 2) {
+            return {
+                group: m[2],
+                number: parseFloat(m[1].replace(',', '.'))
+            }
+        }
+
+        return false;
     },
 
     getNumbers: function() {

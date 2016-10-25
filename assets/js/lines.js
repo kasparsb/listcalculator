@@ -31,6 +31,32 @@ function sumLinesNumbers() {
     return r;
 }
 
+function sumGroups() {
+    var groups = {};
+
+    for (var i = 0; i < lines.length; i++) {
+        numbers = lines[i].getNumbers();
+
+        numbers.forEach(function(number){
+            number.group = number.group.toLowerCase();
+            if (typeof groups[number.group] == 'undefined') {
+                groups[number.group] = 0;
+            }
+
+            groups[number.group] += number.number;
+        })        
+    }
+
+    var r = [];
+    for (var g in groups) {
+        if (groups.hasOwnProperty(g)) {
+            r.push(groups[g]+(g == '__clean__' ? '' : g));
+        }
+    }
+
+    return r;
+}
+
 module.exports = {
     setText: function(text) {
         updateLines(text);
@@ -41,5 +67,9 @@ module.exports = {
      */
     getSum: function() {
         return sumLinesNumbers();
+    },
+
+    getSums: function() {
+        return sumGroups();
     }
 }

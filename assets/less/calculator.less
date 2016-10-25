@@ -1,14 +1,47 @@
 .calculator {
-    &__input {
+    @lineHeight: 18px;
 
+    height: 100%;
+    box-sizing: border-box;
+    padding-top: 20px;
+    padding-bottom: @resultsHeight+10px;
+
+    &__input {
+        height: 100%;
+        padding: 0 10px @resultsHeight;
     }
 
     &__textarea {
+        padding: 8px;
         display: block;
         box-sizing: border-box;
         width: 100%;
         height: 220px;
         border: 1px solid silver;
-        border-radius: 4px;
+        line-height: @lineHeight;
+        height: 100%;
+        outline: none;
+        font-size: 1rem;
+    }
+
+    &__footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 100;
+        background: #efefef;
+    }
+
+    &__results-w {
+        max-width: @docWidth;
+        margin: 0 auto;
+    }
+
+    &__results {
+        padding: 0 18px;
+        height: @resultsHeight;
+        line-height: @resultsHeight;
+        font-size: 1rem;
     }
 }

@@ -1,8 +1,17 @@
 @import 'resets';
 @import 'calculator';
 
+@docWidth: 500px;
+@resultsHeight: 35px;
+@fontSize: 18px;
+
+html, body {
+    height: 100%;
+}
 
 .app {
-    max-width: 500px;
-    margin: 40px auto 0;
+    max-width: @docWidth;
+    margin: 0 auto;
+    box-sizing: border-box;
+    height: 100%;
 }

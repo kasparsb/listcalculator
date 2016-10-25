@@ -16,7 +16,11 @@ $version = $pkg->version;
             <div class="calculator__input">
                 <textarea class="calculator__textarea"></textarea>
             </div>
-            <div class="calculator__results"></div>
+            <div class="calculator__footer">
+                <div class="calculator__results-w">
+                    <div class="calculator__results"></div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="build/app.min-<?php echo $version ?>.js"></script>
